@@ -1,1 +1,1 @@
-# AI-Devtoosl-Zoomcamp-Homework
+# AI-Devtools-Zoomcamp-Homework
