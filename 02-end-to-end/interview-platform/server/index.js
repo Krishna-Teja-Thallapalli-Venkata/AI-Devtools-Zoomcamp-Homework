@@ -40,6 +40,11 @@ io.on("connection", (socket) => {
 });
 
 const PORT = 3001;
-server.listen(PORT, () => {
-    console.log(`SERVER RUNNING ON PORT ${PORT}`);
-});
+
+if (require.main === module) {
+    server.listen(PORT, () => {
+        console.log(`SERVER RUNNING ON PORT ${PORT}`);
+    });
+}
+
+module.exports = { server, io };
