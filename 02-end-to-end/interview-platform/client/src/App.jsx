@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 function App() {
     const [code, setCode] = useState("// Start coding along with your candidate...\nconsole.log('Hello World');");
+    const [language, setLanguage] = useState("javascript");
     const [output, setOutput] = useState("");
     const [isError, setIsError] = useState(false);
     const [roomId, setRoomId] = useState("default-room");
@@ -45,10 +46,19 @@ function App() {
         }
     };
 
+    const handleLanguageChange = (e) => {
+        setLanguage(e.target.value);
+        if (e.target.value === "python") {
+            setCode("# Write Python code here\nprint('Hello Python')");
+        } else {
+            setCode("// Write JavaScript code here\nconsole.log('Hello JS')");
+        }
+    };
+
     const runCode = async () => {
         setOutput("Running...");
         setIsError(false);
-        const result = await executeCode(code);
+        const result = await executeCode(code, language);
         setOutput(result.output);
         setIsError(result.isError);
     };
@@ -71,6 +81,14 @@ function App() {
             }}>
                 <h1 style={{ margin: 0, fontSize: '1.2rem' }}>Interview Platform</h1>
                 <div style={{ display: 'flex', gap: '1rem' }}>
+                    <select
+                        value={language}
+                        onChange={handleLanguageChange}
+                        style={{ padding: '0.5rem', borderRadius: '4px' }}
+                    >
+                        <option value="javascript">JavaScript</option>
+                        <option value="python">Python</option>
+                    </select>
                     <button onClick={copyLink}>Share Room Link</button>
                     <button onClick={runCode} style={{ background: '#4CAF50', color: 'white', border: 'none', padding: '0.5rem 1rem', cursor: 'pointer' }}>Run Code</button>
                 </div>
@@ -78,7 +96,7 @@ function App() {
 
             <main style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
                 <div style={{ flex: 1, borderRight: '1px solid #333' }}>
-                    <CodeEditor code={code} onChange={handleCodeChange} />
+                    <CodeEditor code={code} onChange={handleCodeChange} language={language} />
                 </div>
                 <div style={{ width: '30%', minWidth: '300px' }}>
                     <OutputPanel output={output} isError={isError} />

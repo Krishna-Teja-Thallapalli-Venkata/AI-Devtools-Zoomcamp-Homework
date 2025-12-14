@@ -6,6 +6,16 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 
+// Serve static files from the React app
+const path = require('path');
+const clientBuildPath = path.join(__dirname, '../client/dist');
+app.use(express.static(clientBuildPath));
+
+// Handle React routing, return all requests to React app
+app.get('*', (req, res) => {
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
+});
+
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {

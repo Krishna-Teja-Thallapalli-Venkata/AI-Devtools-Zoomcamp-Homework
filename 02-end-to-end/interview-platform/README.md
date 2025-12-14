@@ -54,3 +54,22 @@ Integration tests are located in the `server` directory.
 cd server
 npm test
 ```
+
+## Docker (Containerization)
+Build the image:
+```bash
+docker build -t interview-platform .
+```
+
+Run the container:
+```bash
+docker run -p 3001:3001 interview-platform
+```
+
+## Deployment
+This application is ready for deployment on services like **Render**.
+
+1.  Create a new Web Service on Render.
+2.  Connect your GitHub repository.
+3.  Select `Docker` as the Runtime.
+4.  Render will automatically build and deploy using the `Dockerfile`.
